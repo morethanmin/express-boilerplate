@@ -5,8 +5,10 @@ const { User } = require('../models')
 module.exports = () => {
   // 로그인 성공 시 쿠키와 id만 들고있는다.
   passport.serializeUser((user, done) => {
+    console.log('passport session save: ', user.id)
     // null - 서버 에러
     // user.id - 성공해서 user의 id를 가져온다.
+
     done(null, user.id)
   })
 
@@ -14,6 +16,7 @@ module.exports = () => {
   // 그래서 서버는 id만 갖고있다가, 페이지 이동 시 필요한 유저 정보는 DB에서 찾아서 가져온다.
   // 그게 deserializeUser 역할이다.
   passport.deserializeUser(async (id, done) => {
+    console.log('passport session get id: ', id)
     // DB에서 정보를 찾으면 req.user로 넣어준다.
     try {
       const user = await User.findOne({ where: { id } })

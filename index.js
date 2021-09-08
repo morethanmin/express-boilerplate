@@ -19,8 +19,9 @@ const app = express()
 const { sequelize } = require('./models/index')
 // 라우터 불러오기
 const pageRouter = require('./routes/page')
-// const userRouter = require('./routes/user')
+const userRouter = require('./routes/user')
 
+//npx sequelize db:create
 sequelize
   .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
   .then(() => {
@@ -31,7 +32,7 @@ sequelize
   })
 
 passportConfig()
-app.set('port', process.env.PORT || 3051) // 포트 설정
+app.set('port', process.env.PORT || 3001) // 포트 설정
 app.use(morgan('dev')) // 개발모드로 로깅
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -62,18 +63,19 @@ app.use(passport.session()) // 앱에서 영구 로그인을 사용한다면 추
 
 // router
 app.use('/', pageRouter) // /
-// app.use('/user', userRouter) // /user
+app.use('/user', userRouter) // /user
 
 // 404 처리 미들웨어
 app.use((req, res, next) => {
   console.log('404 에러')
-  res.status(404).send('Not Found')
+  res.status(404).json('Not Found')
 })
 
 // 에러 처리 미들웨어
 app.use((err, req, res, next) => {
+  console.error('에러 처리 미들웨어')
   console.error(err)
-  res.status(err.status || 500).send(err.message)
+  res.status(err.status || 500).json(err.message)
 })
 
 app.listen(app.get('port'), () => {

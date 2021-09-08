@@ -14,6 +14,8 @@ module.exports = () => {
         passwordField: 'password',
       },
       async (email, password, done) => {
+        console.log('passport의 local-login : ', email, password)
+
         // 함수가 추가된다.
         try {
           const user = await User.findOne({
@@ -22,7 +24,7 @@ module.exports = () => {
           })
           if (!user) {
             // passport에서는 res로 응답이 아닌, 우선 done으로 처리를 한다.
-            return done(null, false, { reason: '이메일이 일치하지 않습니다.' })
+            return done(null, false, { message: '이메일이 일치하지 않습니다.' })
           }
           // 비밀번호 비교 체크
           // 첫번째 인자 password : 사용자가 입력한 비밀번호
@@ -30,12 +32,11 @@ module.exports = () => {
           const result = await bcrypt.compare(password, user.password)
           if (result) {
             // 비밀번호 일치할 경우
-            return done(null, user) // 두번째 user는 성공의 의미
+            return done(null, user, null) // 두번째 user는 성공의 의미
           }
           // 비밀번호 일치하지 않을 경우
-          return done(null, false, { reason: '비밀번호가 일치하지 않습니다.' })
+          return done(null, false, { message: '비밀번호가 일치하지 않습니다.' })
         } catch (err) {
-          console.error(err)
           return done(err) // done의 첫번째 인자는 서버 에러시 넣는다.
         }
       }

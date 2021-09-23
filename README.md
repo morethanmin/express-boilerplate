@@ -1,4 +1,4 @@
-# nextJS-login-boilerplate-server
+# nextjs-login-boilerplate-server
 
 express를 이용한 login boilerplate의 server repository입니다.
 

@@ -5,8 +5,8 @@ express를 이용한 login boilerplate의 server repository입니다.
 
 ## Client repository
 
-- [using redux-saga](https://github.com/morethanmin/nextjs-login-boilerplate-client-saga)
-- [using redux-toolkit](https://github.com/morethanmin/nextjs-login-boilerplate-client-toolkit)
+- [nextjs-toolkit-boilerplate](https://github.com/morethanmin/nextjs-login-boilerplate-client-saga)
+- [nextjs-saga-boilerplate](https://github.com/morethanmin/nextjs-login-boilerplate-client-toolkit)
 
 ## Tech and libraries
 
